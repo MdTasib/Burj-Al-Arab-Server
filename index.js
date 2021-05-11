@@ -21,6 +21,14 @@ client.connect(err => {
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
+    });
+
+    // get
+    app.get('/bookings', (req, res) => {
+        collection.find({ email: req.query.email })
+            .toArray((err, documents) => {
+                res.send(documents);
+            })
     })
 });
 
