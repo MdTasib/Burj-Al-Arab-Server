@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Firebase Admin SDK
-const serviceAccount = require("./burj-al-arab-9bc3e-firebase-adminsdk-trkao-53f1bf1bad.json");
+const serviceAccount = require("./confiqs/burj-al-arab-9bc3e-firebase-adminsdk-trkao-53f1bf1bad.json");
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
