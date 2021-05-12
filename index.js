@@ -3,9 +3,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 // firebase admin
 const admin = require('firebase-admin');
+// environment variables require
+require('dotenv').config();
+
 // mongodb database
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://burjAlArab:mohammadohidulalamtasib@cluster0.do24a.mongodb.net/burjAlArab?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.do24a.mongodb.net/burjAlArab?retryWrites=true&w=majority`;
 
 const app = express();
 app.use(cors());
@@ -16,7 +19,6 @@ const serviceAccount = require("./burj-al-arab-9bc3e-firebase-adminsdk-trkao-53f
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
-
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
@@ -34,6 +36,7 @@ client.connect(err => {
     // get
     app.get('/bookings', (req, res) => {
         const bearer = req.headers.authorization;
+
         if (bearer && bearer.startsWith('Bearer ')) {
             const idToken = bearer.split(' ')[1];
             // idToken comes from the client app
